@@ -1,0 +1,38 @@
+{
+  "builders": [{
+    "type": "azure-arm",
+
+    "client_id": "xxxxx-xxxx-xxxx-xxxx-xxxx",
+    "client_secret": "xxxxx-xxxx-xxxx-xxxx-xxxx",
+    "tenant_id": "xxxxx-xxxx-xxxx-xxxx-xxxx",
+    "subscription_id": "xxxxx-xxxx-xxxx-xxxx-xxxx",
+
+    "managed_image_resource_group_name": "myResourceGroup",
+    "managed_image_name": "myPackerImage",
+
+    "os_type": "Linux",
+    "image_publisher": "RedHat",
+    "image_offer": "rhel-byos",
+    "image_sku": "rhel-raw69",
+
+    "azure_tags": {
+        "dept": "Engineering",
+        "task": "Image deployment"
+    },
+
+    "location": "East US",
+    "vm_size": "Standard_DS2_v2"
+  }],
+ "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "ansible.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "cleanup.sh"
+    }
+  ]
+}
